@@ -1,0 +1,334 @@
+tipo,nombre,anio,nuevo_ha,acumulado_ha
+Departamento,Amazonas,2018,0.0,0.0
+Departamento,Amazonas,2019,0.0,0.0
+Departamento,Amazonas,2020,0.0,0.0
+Departamento,Amazonas,2021,0.0,0.0
+Departamento,Amazonas,2022,0.0,0.0
+Departamento,Amazonas,2023,0.0,0.0
+Departamento,Amazonas,2024,0.0,0.0
+Departamento,Amazonas,2025,46.48,46.48
+Departamento,Amazonas,2026,32.25,78.72
+Departamento,Cajamarca,2018,0.0,0.0
+Departamento,Cajamarca,2019,0.0,0.0
+Departamento,Cajamarca,2020,0.0,0.0
+Departamento,Cajamarca,2021,0.0,0.0
+Departamento,Cajamarca,2022,0.0,0.0
+Departamento,Cajamarca,2023,0.0,0.0
+Departamento,Cajamarca,2024,0.0,0.0
+Departamento,Cajamarca,2025,6.29,6.29
+Departamento,Cajamarca,2026,0.0,6.29
+Departamento,Cusco,2018,504.17,504.17
+Departamento,Cusco,2019,528.98,1033.15
+Departamento,Cusco,2020,365.95,1399.1
+Departamento,Cusco,2021,255.16,1654.25
+Departamento,Cusco,2022,186.02,1840.27
+Departamento,Cusco,2023,297.51,2137.78
+Departamento,Cusco,2024,205.96,2343.74
+Departamento,Cusco,2025,515.1800000000001,2858.91
+Departamento,Cusco,2026,103.15,2962.06
+Departamento,Huánuco,2018,17.39,17.39
+Departamento,Huánuco,2019,59.41,76.8
+Departamento,Huánuco,2020,69.03,145.83
+Departamento,Huánuco,2021,190.26,336.09
+Departamento,Huánuco,2022,380.95,717.04
+Departamento,Huánuco,2023,237.37,954.41
+Departamento,Huánuco,2024,842.15,1796.56
+Departamento,Huánuco,2025,1712.04,3508.6
+Departamento,Huánuco,2026,1227.3899999999999,4735.98
+Departamento,Loreto,2018,94.83,94.83
+Departamento,Loreto,2019,115.82,210.64
+Departamento,Loreto,2020,43.57,254.21
+Departamento,Loreto,2021,115.69,369.9
+Departamento,Loreto,2022,26.19,396.09
+Departamento,Loreto,2023,90.53,486.62
+Departamento,Loreto,2024,122.28,608.9
+Departamento,Loreto,2025,341.63,950.53
+Departamento,Loreto,2026,286.76,1237.29
+Departamento,Madre de Dios,2018,76575.61,76575.61
+Departamento,Madre de Dios,2019,13088.26,89663.87
+Departamento,Madre de Dios,2020,12853.02,102516.88
+Departamento,Madre de Dios,2021,13619.77,116136.66
+Departamento,Madre de Dios,2022,10439.09,126575.75
+Departamento,Madre de Dios,2023,11801.78,138377.53
+Departamento,Madre de Dios,2024,13062.96,151440.49
+Departamento,Madre de Dios,2025,9970.99,161411.47
+Departamento,Madre de Dios,2026,11631.750000000002,173043.22
+Departamento,Piura,2018,0.0,0.0
+Departamento,Piura,2019,0.0,0.0
+Departamento,Piura,2020,0.0,0.0
+Departamento,Piura,2021,0.0,0.0
+Departamento,Piura,2022,0.0,0.0
+Departamento,Piura,2023,0.0,0.0
+Departamento,Piura,2024,0.0,0.0
+Departamento,Piura,2025,71.92,71.92
+Departamento,Piura,2026,0.0,71.92
+Departamento,Puno,2018,591.57,591.57
+Departamento,Puno,2019,225.13,816.7
+Departamento,Puno,2020,232.77,1049.47
+Departamento,Puno,2021,168.31,1217.78
+Departamento,Puno,2022,254.37,1472.15
+Departamento,Puno,2023,410.89,1883.05
+Departamento,Puno,2024,241.33,2124.38
+Departamento,Puno,2025,549.66,2674.03
+Departamento,Puno,2026,469.74,3143.77
+Departamento,San Martín,2018,0.0,0.0
+Departamento,San Martín,2019,0.0,0.0
+Departamento,San Martín,2020,0.0,0.0
+Departamento,San Martín,2021,0.0,0.0
+Departamento,San Martín,2022,11.68,11.68
+Departamento,San Martín,2023,0.0,11.68
+Departamento,San Martín,2024,0.0,11.68
+Departamento,San Martín,2025,19.75,31.43
+Departamento,San Martín,2026,0.0,31.43
+Departamento,Ucayali,2018,106.72,106.72
+Departamento,Ucayali,2019,10.9,117.62
+Departamento,Ucayali,2020,9.31,126.94
+Departamento,Ucayali,2021,18.43,145.37
+Departamento,Ucayali,2022,0.48,145.85
+Departamento,Ucayali,2023,4.05,149.9
+Departamento,Ucayali,2024,36.52,186.42
+Departamento,Ucayali,2025,20.1,206.52
+Departamento,Ucayali,2026,48.6,255.12
+País,Perú,2018,77890.28,77890.28
+País,Perú,2019,14028.5,91918.78
+País,Perú,2020,13573.65,105492.43
+País,Perú,2021,14367.62,119860.05
+País,Perú,2022,11298.78,131158.84
+País,Perú,2023,12842.12,144000.96
+País,Perú,2024,14511.2,158512.16
+País,Perú,2025,13254.029999999999,171766.18
+País,Perú,2026,13799.62,185565.81
+Territorio indígena,Arazaire,2018,227.91,227.91
+Territorio indígena,Arazaire,2019,100.32,328.22
+Territorio indígena,Arazaire,2020,67.89,396.11
+Territorio indígena,Arazaire,2021,82.52,478.63
+Territorio indígena,Arazaire,2022,47.31,525.94
+Territorio indígena,Arazaire,2023,29.17,555.11
+Territorio indígena,Arazaire,2024,81.8,636.91
+Territorio indígena,Arazaire,2025,50.74,687.64
+Territorio indígena,Arazaire,2026,17.67,705.31
+Territorio indígena,Barranco Chico,2018,2647.14,2647.14
+Territorio indígena,Barranco Chico,2019,427.53,3074.67
+Territorio indígena,Barranco Chico,2020,413.12,3487.79
+Territorio indígena,Barranco Chico,2021,541.69,4029.48
+Territorio indígena,Barranco Chico,2022,236.54,4266.02
+Territorio indígena,Barranco Chico,2023,147.57,4413.59
+Territorio indígena,Barranco Chico,2024,126.14,4539.73
+Territorio indígena,Barranco Chico,2025,128.57,4668.3
+Territorio indígena,Barranco Chico,2026,195.59,4863.89
+Territorio indígena,Boca del Inambari,2018,97.34,97.34
+Territorio indígena,Boca del Inambari,2019,132.94,230.28
+Territorio indígena,Boca del Inambari,2020,195.79,426.07
+Territorio indígena,Boca del Inambari,2021,179.73,605.81
+Territorio indígena,Boca del Inambari,2022,95.0,700.8
+Territorio indígena,Boca del Inambari,2023,109.91,810.72
+Territorio indígena,Boca del Inambari,2024,272.42,1083.14
+Territorio indígena,Boca del Inambari,2025,116.46,1199.59
+Territorio indígena,Boca del Inambari,2026,251.56,1451.15
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2018,0.0,0.0
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2019,0.0,0.0
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2020,0.0,0.0
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2021,7.74,7.74
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2022,0.06,7.8
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2023,0.0,7.8
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2024,0.0,7.8
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2025,0.0,7.8
+Territorio indígena,Chapis y Anexo Nueva Alegria y Ajachín,2026,5.51,13.32
+Territorio indígena,El Pilar,2018,46.84,46.84
+Territorio indígena,El Pilar,2019,11.95,58.78
+Territorio indígena,El Pilar,2020,7.83,66.61
+Territorio indígena,El Pilar,2021,19.45,86.07
+Territorio indígena,El Pilar,2022,34.98,121.04
+Territorio indígena,El Pilar,2023,33.71,154.75
+Territorio indígena,El Pilar,2024,0.93,155.69
+Territorio indígena,El Pilar,2025,0.61,156.3
+Territorio indígena,El Pilar,2026,0.0,156.3
+Territorio indígena,Kotsimba,2018,2487.77,2487.77
+Territorio indígena,Kotsimba,2019,474.17,2961.94
+Territorio indígena,Kotsimba,2020,351.87,3313.81
+Territorio indígena,Kotsimba,2021,156.07,3469.88
+Territorio indígena,Kotsimba,2022,95.74,3565.62
+Territorio indígena,Kotsimba,2023,235.75,3801.37
+Territorio indígena,Kotsimba,2024,236.04,4037.41
+Territorio indígena,Kotsimba,2025,49.449999999999996,4086.86
+Territorio indígena,Kotsimba,2026,210.75,4297.61
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2018,0.0,0.0
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2019,0.0,0.0
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2020,1.4,1.4
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2021,0.26,1.66
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2022,0.0,1.66
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2023,9.83,11.49
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2024,251.41,262.89
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2025,410.81,673.71
+Territorio indígena,Nuevo Unidos Tahuantinsuyo,2026,377.28,1050.98
+Territorio indígena,Puerto Luz,2018,414.8,414.8
+Territorio indígena,Puerto Luz,2019,44.78,459.59
+Territorio indígena,Puerto Luz,2020,44.41,503.99
+Territorio indígena,Puerto Luz,2021,108.01,612.0
+Territorio indígena,Puerto Luz,2022,94.11,706.1
+Territorio indígena,Puerto Luz,2023,152.22,858.32
+Territorio indígena,Puerto Luz,2024,108.77,967.09
+Territorio indígena,Puerto Luz,2025,82.64,1049.72
+Territorio indígena,Puerto Luz,2026,161.2,1210.92
+Territorio indígena,San Jacinto,2018,1687.35,1687.35
+Territorio indígena,San Jacinto,2019,237.82,1925.17
+Territorio indígena,San Jacinto,2020,284.4,2209.57
+Territorio indígena,San Jacinto,2021,193.84,2403.41
+Territorio indígena,San Jacinto,2022,124.64,2528.05
+Territorio indígena,San Jacinto,2023,72.53,2600.58
+Territorio indígena,San Jacinto,2024,88.64,2689.23
+Territorio indígena,San Jacinto,2025,48.63,2737.86
+Territorio indígena,San Jacinto,2026,46.440000000000005,2784.31
+Territorio indígena,San José de Karene,2018,5158.14,5158.14
+Territorio indígena,San José de Karene,2019,316.25,5474.39
+Territorio indígena,San José de Karene,2020,516.89,5991.28
+Territorio indígena,San José de Karene,2021,282.03,6273.31
+Territorio indígena,San José de Karene,2022,276.94,6550.25
+Territorio indígena,San José de Karene,2023,416.01,6966.26
+Territorio indígena,San José de Karene,2024,934.72,7900.99
+Territorio indígena,San José de Karene,2025,190.71,8091.69
+Territorio indígena,San José de Karene,2026,874.17,8965.87
+Territorio indígena,Shimpi,2018,0.0,0.0
+Territorio indígena,Shimpi,2019,0.0,0.0
+Territorio indígena,Shimpi,2020,0.0,0.0
+Territorio indígena,Shimpi,2021,0.0,0.0
+Territorio indígena,Shimpi,2022,0.0,0.0
+Territorio indígena,Shimpi,2023,0.0,0.0
+Territorio indígena,Shimpi,2024,1.76,1.76
+Territorio indígena,Shimpi,2025,0.0,1.76
+Territorio indígena,Shimpi,2026,0.0,1.76
+Territorio indígena,Shiringayoc,2018,202.18,202.18
+Territorio indígena,Shiringayoc,2019,90.71,292.89
+Territorio indígena,Shiringayoc,2020,148.39,441.29
+Territorio indígena,Shiringayoc,2021,134.33,575.62
+Territorio indígena,Shiringayoc,2022,96.51,672.14
+Territorio indígena,Shiringayoc,2023,190.93,863.06
+Territorio indígena,Shiringayoc,2024,178.96,1042.02
+Territorio indígena,Shiringayoc,2025,99.36999999999999,1141.38
+Territorio indígena,Shiringayoc,2026,171.94,1313.32
+Territorio indígena,Tres Hermanos del Sira,2018,0.0,0.0
+Territorio indígena,Tres Hermanos del Sira,2019,0.0,0.0
+Territorio indígena,Tres Hermanos del Sira,2020,0.0,0.0
+Territorio indígena,Tres Hermanos del Sira,2021,0.0,0.0
+Territorio indígena,Tres Hermanos del Sira,2022,0.0,0.0
+Territorio indígena,Tres Hermanos del Sira,2023,0.0,0.0
+Territorio indígena,Tres Hermanos del Sira,2024,0.0,0.0
+Territorio indígena,Tres Hermanos del Sira,2025,6.92,6.92
+Territorio indígena,Tres Hermanos del Sira,2026,0.0,6.92
+Territorio indígena,Tres Islas,2018,1456.74,1456.74
+Territorio indígena,Tres Islas,2019,432.84,1889.58
+Territorio indígena,Tres Islas,2020,332.37,2221.95
+Territorio indígena,Tres Islas,2021,384.04,2605.99
+Territorio indígena,Tres Islas,2022,247.38,2853.37
+Territorio indígena,Tres Islas,2023,276.63,3130.0
+Territorio indígena,Tres Islas,2024,320.68,3450.68
+Territorio indígena,Tres Islas,2025,123.66999999999999,3574.36
+Territorio indígena,Tres Islas,2026,273.06,3847.42
+Territorio indígena,Tsirotzire,2018,0.0,0.0
+Territorio indígena,Tsirotzire,2019,28.9,28.9
+Territorio indígena,Tsirotzire,2020,10.47,39.37
+Territorio indígena,Tsirotzire,2021,49.29,88.67
+Territorio indígena,Tsirotzire,2022,229.55,318.22
+Territorio indígena,Tsirotzire,2023,116.04,434.25
+Territorio indígena,Tsirotzire,2024,178.55,612.8
+Territorio indígena,Tsirotzire,2025,233.01,845.81
+Territorio indígena,Tsirotzire,2026,123.08,968.89
+Área protegida,Amarakaeri,2018,4.81,4.81
+Área protegida,Amarakaeri,2019,0.02,4.83
+Área protegida,Amarakaeri,2020,0.09,4.92
+Área protegida,Amarakaeri,2021,0.02,4.94
+Área protegida,Amarakaeri,2022,0.03,4.98
+Área protegida,Amarakaeri,2023,0.0,4.98
+Área protegida,Amarakaeri,2024,0.0,4.98
+Área protegida,Amarakaeri,2025,0.0,4.98
+Área protegida,Amarakaeri,2026,0.0,4.98
+Área protegida,Amarakaeri (zona de amortiguamiento),2018,10047.6,10047.6
+Área protegida,Amarakaeri (zona de amortiguamiento),2019,1196.09,11243.69
+Área protegida,Amarakaeri (zona de amortiguamiento),2020,901.86,12145.55
+Área protegida,Amarakaeri (zona de amortiguamiento),2021,1095.43,13240.99
+Área protegida,Amarakaeri (zona de amortiguamiento),2022,844.25,14085.23
+Área protegida,Amarakaeri (zona de amortiguamiento),2023,1039.62,15124.85
+Área protegida,Amarakaeri (zona de amortiguamiento),2024,1226.58,16351.43
+Área protegida,Amarakaeri (zona de amortiguamiento),2025,473.14,16824.57
+Área protegida,Amarakaeri (zona de amortiguamiento),2026,1079.23,17903.8
+Área protegida,Bahuaja-Sonene,2018,0.0,0.0
+Área protegida,Bahuaja-Sonene,2019,0.0,0.0
+Área protegida,Bahuaja-Sonene,2020,8.21,8.21
+Área protegida,Bahuaja-Sonene,2021,0.0,8.21
+Área protegida,Bahuaja-Sonene,2022,0.0,8.21
+Área protegida,Bahuaja-Sonene,2023,0.0,8.21
+Área protegida,Bahuaja-Sonene,2024,0.0,8.21
+Área protegida,Bahuaja-Sonene,2025,0.0,8.21
+Área protegida,Bahuaja-Sonene,2026,0.0,8.21
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2018,3234.27,3234.27
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2019,521.43,3755.7
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2020,506.65,4262.35
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2021,225.8,4488.15
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2022,192.69,4680.84
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2023,345.53,5026.37
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2024,235.42,5261.79
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2025,146.51,5408.3
+Área protegida,Bahuaja-Sonene (zona de amortiguamiento),2026,227.04,5635.34
+Área protegida,El Sira (zona de amortiguamiento),2018,17.39,17.39
+Área protegida,El Sira (zona de amortiguamiento),2019,59.41,76.8
+Área protegida,El Sira (zona de amortiguamiento),2020,69.03,145.83
+Área protegida,El Sira (zona de amortiguamiento),2021,190.26,336.09
+Área protegida,El Sira (zona de amortiguamiento),2022,380.95,717.04
+Área protegida,El Sira (zona de amortiguamiento),2023,237.37,954.41
+Área protegida,El Sira (zona de amortiguamiento),2024,842.15,1796.56
+Área protegida,El Sira (zona de amortiguamiento),2025,1689.38,3485.94
+Área protegida,El Sira (zona de amortiguamiento),2026,1195.33,4681.26
+Área protegida,Gran Pajatén,2018,0.0,0.0
+Área protegida,Gran Pajatén,2019,0.0,0.0
+Área protegida,Gran Pajatén,2020,0.0,0.0
+Área protegida,Gran Pajatén,2021,0.0,0.0
+Área protegida,Gran Pajatén,2022,11.68,11.68
+Área protegida,Gran Pajatén,2023,0.0,11.68
+Área protegida,Gran Pajatén,2024,0.0,11.68
+Área protegida,Gran Pajatén,2025,0.0,11.68
+Área protegida,Gran Pajatén,2026,0.0,11.68
+Área protegida,Los Amigos,2018,0.0,0.0
+Área protegida,Los Amigos,2019,0.0,0.0
+Área protegida,Los Amigos,2020,0.35,0.35
+Área protegida,Los Amigos,2021,0.0,0.35
+Área protegida,Los Amigos,2022,0.79,1.13
+Área protegida,Los Amigos,2023,0.48,1.61
+Área protegida,Los Amigos,2024,0.0,1.61
+Área protegida,Los Amigos,2025,0.0,1.61
+Área protegida,Los Amigos,2026,0.0,1.61
+Área protegida,Panguana,2018,0.0,0.0
+Área protegida,Panguana,2019,0.0,0.0
+Área protegida,Panguana,2020,0.0,0.0
+Área protegida,Panguana,2021,0.0,0.0
+Área protegida,Panguana,2022,0.0,0.0
+Área protegida,Panguana,2023,0.0,0.0
+Área protegida,Panguana,2024,0.0,0.0
+Área protegida,Panguana,2025,12.9,12.9
+Área protegida,Panguana,2026,0.2,13.1
+Área protegida,Sierra del Divisor,2018,0.0,0.0
+Área protegida,Sierra del Divisor,2019,0.0,0.0
+Área protegida,Sierra del Divisor,2020,0.0,0.0
+Área protegida,Sierra del Divisor,2021,0.0,0.0
+Área protegida,Sierra del Divisor,2022,0.0,0.0
+Área protegida,Sierra del Divisor,2023,5.85,5.85
+Área protegida,Sierra del Divisor,2024,0.0,5.85
+Área protegida,Sierra del Divisor,2025,0.0,5.85
+Área protegida,Sierra del Divisor,2026,0.0,5.85
+Área protegida,Tambopata,2018,1055.96,1055.96
+Área protegida,Tambopata,2019,55.14,1111.1
+Área protegida,Tambopata,2020,35.58,1146.68
+Área protegida,Tambopata,2021,28.49,1175.17
+Área protegida,Tambopata,2022,4.9,1180.08
+Área protegida,Tambopata,2023,22.41,1202.49
+Área protegida,Tambopata,2024,47.47,1249.96
+Área protegida,Tambopata,2025,375.68,1625.64
+Área protegida,Tambopata,2026,964.88,2590.52
+Área protegida,Tambopata (zona de amortiguamiento),2018,16742.71,16742.71
+Área protegida,Tambopata (zona de amortiguamiento),2019,1667.62,18410.33
+Área protegida,Tambopata (zona de amortiguamiento),2020,1053.66,19463.99
+Área protegida,Tambopata (zona de amortiguamiento),2021,835.04,20299.03
+Área protegida,Tambopata (zona de amortiguamiento),2022,840.41,21139.44
+Área protegida,Tambopata (zona de amortiguamiento),2023,1134.09,22273.54
+Área protegida,Tambopata (zona de amortiguamiento),2024,1571.68,23845.22
+Área protegida,Tambopata (zona de amortiguamiento),2025,1804.5800000000002,25649.8
+Área protegida,Tambopata (zona de amortiguamiento),2026,2584.14,28233.94
