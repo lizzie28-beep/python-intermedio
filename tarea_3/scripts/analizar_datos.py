@@ -3,6 +3,7 @@ Para calcular indicadores claves (KPIs) y hallazgos
 """
 from pathlib import Path
 import pandas as pd
+import json
 
 RAIZ = Path(__file__).resolve().parent.parent
 PROCESADOS = RAIZ / "datos" / "procesados"
@@ -68,3 +69,29 @@ print(f"Dentro de áreas protegidas: {nucleo:,.0f} ha")
 print(f"En sus zonas de amortiguamiento: {amortiguamiento:,.0f} ha")
 print(f"En territorios indígenas: {ti['acumulado_ha'].sum():,.0f} ha")
 print(ti[["nombre", "acumulado_ha"]].head(5).to_string(index=False))
+#---------- EXPORTAR DATOS PARA EL DASHBOARD ----------
+WEB = RAIZ / "web" / "data"
+WEB.mkdir(parents=True, exist_ok=True)
+
+kpis = {"ultimo_periodo": "2026-T3",
+        "total_ha": round(float(total)),
+        "base_2018_ha": round(float(base)),
+        "crecimiento_pct": round(float(crecimiento_pct), 1),
+        "ene_set_2026_ha": round(float(ene_set_2026)),
+        "ene_set_2025_ha": round(float(ene_set_2025)),
+        "variacion_pct": round(float(variacion_pct), 1),
+        "top_departamento": top["nombre"],
+        "participacion_top_pct": round(float(participacion_top), 1),
+        "ap_nucleo_ha": round(float(nucleo)),
+        "ap_amortiguamiento_ha": round(float(amortiguamiento)),
+        "territorios_indigenas_ha": round(float(ti["acumulado_ha"].sum())),
+}
+
+datos = {
+    "kpis": kpis,
+    "serie": serie.to_dict(orient="records"),
+}
+with open(WEB / "datos.json", "w", encoding="utf-8") as f:
+    json.dump(datos, f, ensure_ascii=False)
+
+print("\nDatos exportados a web/data/datos.json")
