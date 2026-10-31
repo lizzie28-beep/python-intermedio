@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La huella del oro en la Amazonía peruana</title>
+<meta name="description" content="Dashboard sobre la expansión de la minería aurífera en la Amazonía peruana, 2018–2026, con datos satelitales de Amazon Mining Watch.">
+
+<!-- Tipografías -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Librerías: mapa (Leaflet) y gráficos (Chart.js) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+/* =========================================================
+   1. COLORES Y TIPOGRAFÍA (cámbialos aquí para personalizar)
+   Paleta inspirada en una imagen satelital de la Amazonía:
+   selva, sedimento de los relaves y agua turquesa de las pozas.
+   ========================================================= */
+:root {
+  --fondo: #EEF2EC;        /* gris verdoso claro */
+  --superficie: #FFFFFF;
+  --texto: #18261E;        /* verde casi negro */
+  --texto-suave: #55665A;
+  --linea: #CBD5CC;
+  --selva: #1F4D36;        /* verde selva */
+  --oro: #C2862B;          /* sedimento / minería */
+  --poza: #2E9C93;         /* agua de las pozas mineras */
+  --alerta: #A8442A;
+  --fuente-titulos: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --fuente-texto: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #101A14;
+    --superficie: #17241C;
+    --texto: #E6EEE7;
+    --texto-suave: #9DB0A2;
+    --linea: #2C3D31;
+    --selva: #7FBF95;
+    --oro: #E0A647;
+    --poza: #4CC3B8;
+    --alerta: #E07A5C;
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-size: 17px;
+  line-height: 1.55;
+}
+h1, h2, h3 { font-family: var(--fuente-titulos); line-height: 1.15; margin: 0 0 .5em; }
+h2 { font-size: 1.6rem; font-stretch: 85%; font-weight: 750; }
+h3 { font-size: 1.15rem; font-weight: 700; }
+p { margin: 0 0 1em; max-width: 72ch; }
+a { color: var(--poza); }
+.contenedor { width: min(1180px, 100% - 2rem); margin-inline: auto; }
+section { padding: 2.5rem 0; }
+
+/* =========================================================
+   2. PORTADA
+   ========================================================= */
+.portada { background: var(--selva); color: #F2F6F1; padding: 3.5rem 0 2.5rem; }
+.portada h1 {
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  font-stretch: 75%;
+  font-weight: 800;
+  max-width: 18ch;
+}
+.portada .pregunta { font-size: 1.25rem; max-width: 60ch; }
+.portada .datos-ficha { display: flex; flex-wrap: wrap; gap: .5rem 2rem; margin-top: 1.5rem; font-size: .95rem; opacity: .9; }
+.portada .datos-ficha b { display: block; font-family: var(--fuente-titulos); font-size: .8rem; opacity: .75; font-weight: 600; }
+/* Barra que compara la huella de 2018 con la actual */
+.huella { margin-top: 2rem; max-width: 760px; }
+.huella .barra { height: 22px; background: var(--oro); border-radius: 2px; margin: .25rem 0 .9rem; }
+.huella .etiqueta { font-size: .95rem; }
+@media (prefers-color-scheme: dark) { .portada { background: #0B2418; } }
+
+/* =========================================================
+   3. CONTROLES (filtros)
+   ========================================================= */
+.controles {
+  position: sticky; top: 0; z-index: 1000;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--linea);
+  padding: .8rem 0;
+}
+.controles .contenedor { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: end; }
+.control { display: flex; flex-direction: column; gap: .2rem; font-size: .9rem; }
+.control label { font-weight: 600; color: var(--texto-suave); }
+.control select, .control input[type="search"] {
+  font: inherit; padding: .4rem .6rem; border: 1px solid var(--linea);
+  border-radius: 6px; background: var(--fondo); color: var(--texto); min-width: 180px;
+}
+.control input[type="range"] { width: 220px; accent-color: var(--oro); }
+#anio-valor { font-family: var(--fuente-titulos); font-weight: 750; font-size: 1.2rem; color: var(--oro); }
+:focus-visible { outline: 3px solid var(--poza); outline-offset: 2px; }
+
+/* =========================================================
+   4. INDICADORES (KPIs)
+   ========================================================= */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; border-top: 3px solid var(--oro); background: var(--superficie); }
+.kpi { padding: 1.2rem 1.2rem 1.4rem; border-right: 1px solid var(--linea); }
+.kpi:last-child { border-right: none; }
+.kpi .valor { font-family: var(--fuente-titulos); font-size: 2.3rem; font-weight: 800; font-stretch: 80%; line-height: 1.1; }
+.kpi .nombre { font-weight: 600; }
+.kpi .nota { font-size: .85rem; color: var(--texto-suave); }
+.aviso { margin-top: 1rem; padding: .9rem 1.1rem; border-left: 4px solid var(--alerta); background: var(--superficie); }
+
+/* =========================================================
+   5. GRÁFICOS Y MAPA
+   ========================================================= */
+.rejilla { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.panel { background: var(--superficie); border: 1px solid var(--linea); border-radius: 8px; padding: 1.2rem; min-width: 0; }
+.panel .ayuda { font-size: .9rem; color: var(--texto-suave); margin-bottom: .6rem; }
+.lienzo { position: relative; height: 360px; }
+#mapa { height: 460px; border-radius: 6px; }
+.leyenda { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: .82rem; margin-top: .6rem; }
+.leyenda span { display: inline-flex; align-items: center; gap: .35rem; }
+.leyenda i { width: 14px; height: 14px; border-radius: 2px; display: inline-block; border: 1px solid var(--linea); }
+@media (max-width: 860px) { .rejilla { grid-template-columns: 1fr; } #mapa { height: 380px; } }
+
+/* =========================================================
+   6. TABLA
+   ========================================================= */
+.tabla-caja { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+th, td { padding: .5rem .6rem; border-bottom: 1px solid var(--linea); text-align: left; }
+th { font-family: var(--fuente-titulos); font-weight: 700; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.boton { font: inherit; font-weight: 600; padding: .45rem .9rem; border-radius: 6px; border: 1px solid var(--oro); background: transparent; color: var(--texto); cursor: pointer; }
+.boton:hover { background: var(--oro); color: #1A1206; }
+
+/* =========================================================
+   7. HALLAZGOS Y METODOLOGÍA
+   ========================================================= */
+.hallazgos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.hallazgo { border-top: 3px solid var(--selva); padding-top: .8rem; }
+.hallazgo .cifra { font-family: var(--fuente-titulos); font-size: 1.8rem; font-weight: 800; color: var(--oro); font-stretch: 80%; }
+.metodo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem 2.5rem; }
+.metodo ul { padding-left: 1.2rem; margin: 0; }
+.metodo li { margin-bottom: .5rem; }
+footer { padding: 2rem 0 3rem; font-size: .9rem; color: var(--texto-suave); border-top: 1px solid var(--linea); }
+#error { display: none; background: var(--alerta); color: #fff; padding: 1rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+
+<body>
+<!-- Mensaje si los datos no cargan -->
+<div id="error" role="alert"></div>
+
+<!-- =========================================================
+     PORTADA: título, pregunta, cobertura y fuente
+     ========================================================= -->
+<header class="portada">
+  <div class="contenedor">
+    <h1>La huella del oro en la Amazonía peruana</h1>
+    <p class="pregunta">¿Dónde y a qué ritmo avanza la minería aurífera en la Amazonía peruana, y cuánto presiona sobre áreas protegidas y territorios indígenas?</p>
+    <p>La minería de oro deja cicatrices visibles desde el espacio: bosque arrasado y pozas de agua estancada. Este dashboard usa detecciones satelitales para medir cuánto ha crecido esa huella desde 2018 y hacia dónde se está expandiendo.</p>
+
+    <div class="huella" aria-label="Comparación de la huella minera">
+      <div class="etiqueta">2018: <strong id="huella-2018">…</strong> ha</div>
+      <div class="barra" id="barra-2018"></div>
+      <div class="etiqueta"><span id="huella-ultimo-periodo">Hoy</span>: <strong id="huella-hoy">…</strong> ha</div>
+      <div class="barra" id="barra-hoy" style="width:100%"></div>
+    </div>
+
+    <div class="datos-ficha">
+      <div><b>Cobertura geográfica</b>Amazonía peruana (10 departamentos con minería detectada)</div>
+      <div><b>Periodo</b>2018 a setiembre de 2026</div>
+      <div><b>Fuente</b><a href="https://amazonminingwatch.org" style="color:inherit">Amazon Mining Watch</a> (CC BY 4.0)</div>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     CONTROLES INTERACTIVOS
+     ========================================================= -->
+<nav class="controles" aria-label="Filtros del dashboard">
+  <div class="contenedor">
+    <div class="control">
+      <label for="anio">Año: <span id="anio-valor">2026</span></label>
+      <input type="range" id="anio" min="2018" max="2026" step="1" value="2026">
+    </div>
+    <div class="control">
+      <label for="tipo">Tipo de territorio</label>
+      <select id="tipo">
+        <option>Departamento</option>
+        <option>Área protegida</option>
+        <option>Territorio indígena</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="jurisdiccion">Evolución de</label>
+      <select id="jurisdiccion"></select>
+    </div>
+    <div class="control">
+      <label for="detalle">Ver la evolución por</label>
+      <select id="detalle">
+        <option value="anio">Año</option>
+        <option value="periodo">Periodo publicado (trimestres desde 2025)</option>
+      </select>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- =========================================================
+     INDICADORES (se recalculan con el año elegido)
+     ========================================================= -->
+<section>
+  <div class="contenedor">
+    <h2>Indicadores al año seleccionado</h2>
+    <div class="kpis">
+      <div class="kpi">
+        <div class="valor" id="kpi-total">…</div>
+        <div class="nombre">hectáreas con minería</div>
+        <div class="nota" id="kpi-total-nota"></div>
+      </div>
+      <div class="kpi">
+        <div class="valor" id="kpi-crec">…</div>
+        <div class="nombre">de crecimiento desde 2018</div>
+        <div class="nota">Respecto a la huella existente en 2018</div>
+      </div>
+      <div class="kpi">
+        <div class="valor" id="kpi-nuevo">…</div>
+        <div class="nombre">hectáreas nuevas en el año</div>
+        <div class="nota" id="kpi-nuevo-nota"></div>
+      </div>
+      <div class="kpi">
+        <div class="valor" id="kpi-top">…</div>
+        <div class="nombre" id="kpi-top-nombre">del total en un solo departamento</div>
+        <div class="nota">Participación en la huella acumulada</div>
+      </div>
+    </div>
+    <p class="aviso" id="aviso-2026"></p>
+  </div>
+</section>
+
+<!-- =========================================================
+     MAPA Y RANKING
+     ========================================================= -->
+<section>
+  <div class="contenedor rejilla">
+    <div class="panel">
+      <h3>Huella minera por departamento</h3>
+      <p class="ayuda">Hectáreas acumuladas al año elegido. Haz clic en un departamento para ver su evolución.</p>
+      <div id="mapa" role="img" aria-label="Mapa del Perú coloreado según hectáreas con minería por departamento"></div>
+      <div class="leyenda" id="leyenda"></div>
+    </div>
+    <div class="panel">
+      <h3 id="titulo-ranking">Territorios con más minería</h3>
+      <p class="ayuda">Los 10 con más hectáreas acumuladas. Cambia el tipo de territorio en los filtros.</p>
+      <div class="lienzo" style="height:460px"><canvas id="grafico-ranking"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SERIES DE TIEMPO
+     ========================================================= -->
+<section>
+  <div class="contenedor rejilla">
+    <div class="panel">
+      <h3 id="titulo-serie">Evolución</h3>
+      <p class="ayuda">Barras: hectáreas nuevas en cada periodo. Línea: huella acumulada. El valor de 2018 incluye toda la minería anterior.</p>
+      <div class="lienzo"><canvas id="grafico-serie"></canvas></div>
+    </div>
+    <div class="panel">
+      <h3>¿Dónde aparece la minería nueva?</h3>
+      <p class="ayuda">Hectáreas nuevas por año en Madre de Dios y en el resto del país. La línea muestra qué porcentaje ocurre fuera de Madre de Dios.</p>
+      <div class="lienzo"><canvas id="grafico-expansion"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TABLA CON BÚSQUEDA Y DESCARGA
+     ========================================================= -->
+<section>
+  <div class="contenedor panel">
+    <h3 id="titulo-tabla">Buscar un territorio</h3>
+    <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:end; margin-bottom:1rem">
+      <div class="control">
+        <label for="buscar">Nombre</label>
+        <input type="search" id="buscar" placeholder="Ej.: Tambopata">
+      </div>
+      <button class="boton" id="descargar">Descargar tabla (CSV)</button>
+    </div>
+    <div class="tabla-caja">
+      <table>
+        <thead><tr><th>Territorio</th><th class="num">Hectáreas acumuladas</th><th class="num">Nuevas en el año</th><th class="num">Desde 2018</th></tr></thead>
+        <tbody id="tabla"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     HALLAZGOS (edítalos con tus palabras)
+     ========================================================= -->
+<section>
+  <div class="contenedor">
+    <h2>Hallazgos principales</h2>
+    <div class="hallazgos">
+      <article class="hallazgo">
+        <div class="cifra">+138 %</div>
+        <h3>La minería más que se duplicó y en 2026 va más rápido</h3>
+        <p>La huella pasó de 77,890 ha en 2018 a 185,566 ha en setiembre de 2026. Entre enero y setiembre de 2026 se detectaron 13,800 ha nuevas, un 30.6 % más que en el mismo periodo de 2025.</p>
+      </article>
+      <article class="hallazgo">
+        <div class="cifra">24.8 %</div>
+        <h3>Madre de Dios concentra casi todo, pero la minería se expande</h3>
+        <p>Madre de Dios tiene el 93.3 % de la huella. Sin embargo, la minería nueva fuera de esa región pasó de 5–8 % del total anual (2019–2023) a 24.8 % en 2025. Huánuco creció de 17 ha a 4,736 ha, casi todo en la zona de amortiguamiento de la Reserva Comunal El Sira.</p>
+      </article>
+      <article class="hallazgo">
+        <div class="cifra">56,454 ha</div>
+        <h3>La minería rodea las áreas protegidas</h3>
+        <p>Dentro de las áreas protegidas hay 2,636 ha de minería, pero en sus zonas de amortiguamiento hay 56,454 ha, unas 21 veces más. En territorios indígenas se acumulan 31,638 ha; San José de Karene es el más afectado, con 8,966 ha.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     METODOLOGÍA, FUENTES Y LIMITACIONES
+     ========================================================= -->
+<section>
+  <div class="contenedor metodo">
+    <div>
+      <h2>Metodología</h2>
+      <ul>
+        <li>Se descargó la tabla oficial de Amazon Mining Watch con las hectáreas de minería detectadas por jurisdicción y periodo (publicación del 19 de octubre de 2026).</li>
+        <li>Se filtraron los registros del Perú, se revisaron duplicados y se separó el código de periodo en año y trimestre.</li>
+        <li>Se validó que la suma de hectáreas nuevas coincida con el acumulado final de cada territorio (diferencia máxima: 0.02 ha).</li>
+        <li>Los datos trimestrales de 2025 y 2026 se agregaron por año. 2026 solo incluye enero a setiembre.</li>
+        <li>Todo el procesamiento se hizo en Python (pandas). El código está en el repositorio.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Limitaciones</h2>
+      <ul>
+        <li>Según Amazon Mining Watch, el modelo sobreestima el área minada entre 1.5 y 1.7 veces. Las comparaciones entre periodos son más confiables que los totales.</li>
+        <li>Los periodos más recientes pueden revisarse: una zona entra al registro cuando se detecta en dos periodos. El primer trimestre coincide con la temporada de lluvias y nubes.</li>
+        <li>No se detecta la minería en ríos (dragas) ni la minería andina.</li>
+        <li>El valor de 2018 incluye toda la minería existente hasta ese año.</li>
+        <li>Áreas protegidas y territorios indígenas pueden superponerse, así que sus cifras no se suman.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Fuentes</h2>
+      <ul>
+        <li>Amazon Mining Watch (Earth Genome, Amazon Conservation y Pulitzer Center). Datos: <a href="https://github.com/earthrise-media/mining-detector">github.com/earthrise-media/mining-detector</a>. Licencia CC BY 4.0.</li>
+        <li>Límites departamentales: INEI, versión simplificada de <a href="https://github.com/juaneladio/peru-geojson">juaneladio/peru-geojson</a>.</li>
+        <li>Mapa base: © OpenStreetMap y CARTO.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <p>Elaborado por <strong>[Tu nombre]</strong> para el curso Python Intermedio, noviembre de 2026. Código en <a href="https://github.com/[tu-usuario]/python-intermedio">GitHub</a>.</p>
+    <p>Uso de inteligencia artificial: se utilizó Claude como apoyo para estructurar el análisis y la plantilla de esta página. Los datos, cifras e interpretaciones fueron verificados por el autor.</p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   CÓDIGO DEL DASHBOARD
+   Lee web/data/datos.json (creado por analizar_datos.py)
+   y web/data/peru_departamental.geojson.
+   ========================================================= */
+
+// ---------- Utilidades ----------
+const formato = n => Math.round(n).toLocaleString("es-PE");
+const color = nombre => getComputedStyle(document.documentElement).getPropertyValue(nombre).trim();
+const sinTildes = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+let DATOS;          // todo el contenido de datos.json
+let territorios;    // id -> { tipo, nombre, filas }
+let mapa, capaMapa, graficoRanking, graficoSerie, graficoExpansion;
+
+const estado = { anio: 2026, tipo: "Departamento", jurisdiccion: "PER", detalle: "anio", busqueda: "" };
+
+// ---------- Cálculos sobre la serie ----------
+// Huella acumulada de un territorio al final del año elegido
+function acumuladoAl(id, anio) {
+  const filas = territorios[id].filas.filter(f => f.anio <= anio);
+  return filas.length ? filas[filas.length - 1].acumulado_ha : 0;
+}
+// Hectáreas nuevas de un territorio durante un año
+function nuevoEn(id, anio) {
+  return territorios[id].filas.filter(f => f.anio === anio).reduce((s, f) => s + f.nuevo_ha, 0);
+}
+function idsDeTipo(tipo) {
+  return Object.keys(territorios).filter(id => territorios[id].tipo === tipo);
+}
+
+// ---------- Inicio: cargar datos ----------
+Promise.all([
+  fetch("data/datos.json").then(r => r.json()),
+  fetch("data/peru_departamental.geojson").then(r => r.json()),
+]).then(([datos, geo]) => {
+  DATOS = datos;
+  territorios = {};
+  datos.serie
+    .slice()
+    .sort((a, b) => a.admin_year - b.admin_year)
+    .forEach(f => {
+      if (!territorios[f.id]) territorios[f.id] = { tipo: f.tipo, nombre: f.nombre, filas: [] };
+      territorios[f.id].filas.push(f);
+    });
+  prepararPortada();
+  prepararSelectorJurisdiccion();
+  prepararMapa(geo);
+  prepararControles();
+  actualizarTodo();
+}).catch(err => {
+  const caja = document.getElementById("error");
+  caja.style.display = "block";
+  caja.textContent = "No se pudieron cargar los datos (" + err.message + "). " +
+    "Si abriste el archivo con doble clic, ábrelo con un servidor local: en la carpeta web ejecuta «python -m http.server» y entra a http://localhost:8000.";
+});
+
+// ---------- Portada ----------
+function prepararPortada() {
+  const k = DATOS.kpis;
+  document.getElementById("huella-2018").textContent = formato(k.base_2018_ha);
+  document.getElementById("huella-hoy").textContent = formato(k.total_ha);
+  document.getElementById("huella-ultimo-periodo").textContent = "Setiembre de 2026";
+  document.getElementById("barra-2018").style.width = (100 * k.base_2018_ha / k.total_ha) + "%";
+  document.getElementById("aviso-2026").innerHTML =
+    "<strong>2026 va más rápido:</strong> entre enero y setiembre de 2026 se detectaron " + formato(k.ene_set_2026_ha) +
+    " ha nuevas, frente a " + formato(k.ene_set_2025_ha) + " ha en el mismo periodo de 2025 (" +
+    (k.variacion_pct > 0 ? "+" : "") + k.variacion_pct.toLocaleString("es-PE") + " %).";
+}
+
+// ---------- Selector de jurisdicción (agrupado por tipo) ----------
+function prepararSelectorJurisdiccion() {
+  const select = document.getElementById("jurisdiccion");
+  ["País", "Departamento", "Área protegida", "Territorio indígena"].forEach(tipo => {
+    const grupo = document.createElement("optgroup");
+    grupo.label = tipo;
+    idsDeTipo(tipo)
+      .sort((a, b) => territorios[a].nombre.localeCompare(territorios[b].nombre, "es"))
+      .forEach(id => grupo.append(new Option(territorios[id].nombre, id)));
+    select.append(grupo);
+  });
+  select.value = estado.jurisdiccion;
+}
+
+// ---------- Controles: cada cambio actualiza el estado y redibuja ----------
+function prepararControles() {
+  const anio = document.getElementById("anio");
+  anio.addEventListener("input", () => { estado.anio = +anio.value; actualizarTodo(); });
+  document.getElementById("tipo").addEventListener("change", e => { estado.tipo = e.target.value; actualizarRanking(); actualizarTabla(); });
+  document.getElementById("jurisdiccion").addEventListener("change", e => { estado.jurisdiccion = e.target.value; actualizarSerie(); });
+  document.getElementById("detalle").addEventListener("change", e => { estado.detalle = e.target.value; actualizarSerie(); });
+  document.getElementById("buscar").addEventListener("input", e => { estado.busqueda = e.target.value; actualizarTabla(); });
+  document.getElementById("descargar").addEventListener("click", descargarCSV);
+}
+
+function elegirJurisdiccion(id) {
+  estado.jurisdiccion = id;
+  document.getElementById("jurisdiccion").value = id;
+  actualizarSerie();
+  document.getElementById("titulo-serie").scrollIntoView({ block: "center" });
+}
+
+function actualizarTodo() {
+  document.getElementById("anio-valor").textContent = estado.anio === 2026 ? "2026 (ene–set)" : estado.anio;
+  actualizarKPIs();
+  actualizarMapa();
+  actualizarRanking();
+  actualizarSerie();
+  actualizarExpansion();
+  actualizarTabla();
+}
+
+// ---------- KPIs ----------
+function actualizarKPIs() {
+  const a = estado.anio;
+  const total = acumuladoAl("PER", a);
+  const base = acumuladoAl("PER", 2018);
+  const nuevo = nuevoEn("PER", a);
+
+  document.getElementById("kpi-total").textContent = formato(total);
+  document.getElementById("kpi-total-nota").textContent = a === 2026 ? "Acumulado a setiembre de 2026" : "Acumulado a diciembre de " + a;
+  document.getElementById("kpi-crec").textContent = "+" + Math.round(100 * (total - base) / base) + " %";
+
+  if (a === 2018) {
+    document.getElementById("kpi-nuevo").textContent = "—";
+    document.getElementById("kpi-nuevo-nota").textContent = "2018 es la línea base: incluye toda la minería anterior";
+  } else {
+    document.getElementById("kpi-nuevo").textContent = formato(nuevo);
+    document.getElementById("kpi-nuevo-nota").textContent = a === 2026 ? "Solo enero a setiembre" : "Enero a diciembre de " + a;
+  }
+
+  const deps = idsDeTipo("Departamento").map(id => ({ id, ha: acumuladoAl(id, a) })).sort((x, y) => y.ha - x.ha);
+  document.getElementById("kpi-top").textContent = (100 * deps[0].ha / total).toLocaleString("es-PE", { maximumFractionDigits: 1 }) + " %";
+  document.getElementById("kpi-top-nombre").textContent = "del total está en " + territorios[deps[0].id].nombre;
+}
+
+// ---------- Mapa ----------
+// Rangos de color (hectáreas). Usamos rangos desiguales porque Madre de Dios
+// tiene mucha más minería que el resto y, si no, los demás no se verían.
+const RANGOS = [
+  { min: 50000, color: "#7A3E12", texto: "Más de 50,000 ha" },
+  { min: 2000,  color: "#B4651E", texto: "2,000 – 50,000 ha" },
+  { min: 500,   color: "#D99A3E", texto: "500 – 2,000 ha" },
+  { min: 1,     color: "#F0D08A", texto: "1 – 500 ha" },
+  { min: 0,     color: "transparent", texto: "Sin minería detectada" },
+];
+const colorDe = ha => RANGOS.find(r => ha >= r.min).color;
+
+function prepararMapa(geo) {
+  mapa = L.map("mapa", { scrollWheelZoom: false }).setView([-9.5, -74.5], 5);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+    attribution: "© OpenStreetMap, © CARTO", maxZoom: 10,
+  }).addTo(mapa);
+
+  capaMapa = L.geoJSON(geo, {
+    style: estiloDepartamento,
+    onEachFeature: (f, capa) => {
+      capa.on("click", () => elegirJurisdiccion("PE_" + f.properties.FIRST_IDDP));
+    },
+  }).addTo(mapa);
+
+  document.getElementById("leyenda").innerHTML = RANGOS.map(r =>
+    `<span><i style="background:${r.color}"></i>${r.texto}</span>`).join("");
+}
+
+function estiloDepartamento(f) {
+  const id = "PE_" + f.properties.FIRST_IDDP;
+  const ha = territorios[id] ? acumuladoAl(id, estado.anio) : 0;
+  return { color: "#55665A", weight: 1, fillColor: colorDe(ha), fillOpacity: ha > 0 ? 0.85 : 0 };
+}
+
+function actualizarMapa() {
+  capaMapa.setStyle(estiloDepartamento);
+  capaMapa.eachLayer(capa => {
+    const p = capa.feature.properties;
+    const id = "PE_" + p.FIRST_IDDP;
+    const ha = territorios[id] ? acumuladoAl(id, estado.anio) : 0;
+    const nombre = territorios[id] ? territorios[id].nombre : p.NOMBDEP;
+    capa.bindTooltip(`<strong>${nombre}</strong><br>${formato(ha)} ha`, { sticky: true });
+  });
+}
+
+// ---------- Ranking ----------
+function actualizarRanking() {
+  const filas = idsDeTipo(estado.tipo)
+    .map(id => ({ id, nombre: territorios[id].nombre, ha: acumuladoAl(id, estado.anio) }))
+    .filter(f => f.ha > 0)
+    .sort((a, b) => b.ha - a.ha)
+    .slice(0, 10);
+
+  const titulos = { "Departamento": "Departamentos", "Área protegida": "Áreas protegidas", "Territorio indígena": "Territorios indígenas" };
+  document.getElementById("titulo-ranking").textContent = titulos[estado.tipo] + " con más minería";
+
+  const datos = {
+    labels: filas.map(f => f.nombre),
+    datasets: [{ data: filas.map(f => f.ha), backgroundColor: color("--oro"), ids: filas.map(f => f.id) }],
+  };
+  if (graficoRanking) { graficoRanking.data = datos; graficoRanking.update(); return; }
+
+  graficoRanking = new Chart(document.getElementById("grafico-ranking"), {
+    type: "bar",
+    data: datos,
+    options: {
+      indexAxis: "y",
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => formato(c.raw) + " ha" } } },
+      scales: { x: { title: { display: true, text: "Hectáreas acumuladas" }, ticks: { color: color("--texto-suave") } },
+                y: { ticks: { color: color("--texto") } } },
+      onClick: (e, elementos) => {
+        if (elementos.length) elegirJurisdiccion(graficoRanking.data.datasets[0].ids[elementos[0].index]);
+      },
+    },
+  });
+}
+
+// ---------- Serie de tiempo del territorio elegido ----------
+function actualizarSerie() {
+  const t = territorios[estado.jurisdiccion];
+  let etiquetas, nuevos, acumulados;
+
+  if (estado.detalle === "anio") {
+    const anios = [...new Set(t.filas.map(f => f.anio))];
+    etiquetas = anios.map(a => a === 2026 ? "2026*" : String(a));
+    nuevos = anios.map(a => nuevoEn(estado.jurisdiccion, a));
+    acumulados = anios.map(a => acumuladoAl(estado.jurisdiccion, a));
+  } else {
+    etiquetas = t.filas.map(f => f.periodo);
+    nuevos = t.filas.map(f => f.nuevo_ha);
+    acumulados = t.filas.map(f => f.acumulado_ha);
+  }
+  // El primer valor es la línea base (minería previa a 2018): no se muestra como "nuevo"
+  nuevos[0] = null;
+
+  document.getElementById("titulo-serie").textContent = "Evolución: " + t.nombre;
+  const datos = {
+    labels: etiquetas,
+    datasets: [
+      { type: "bar", label: "Hectáreas nuevas", data: nuevos, backgroundColor: color("--oro"), yAxisID: "y" },
+      { type: "line", label: "Huella acumulada", data: acumulados, borderColor: color("--selva"),
+        backgroundColor: color("--selva"), yAxisID: "y2", tension: 0.2, pointRadius: 3 },
+    ],
+  };
+  if (graficoSerie) { graficoSerie.data = datos; graficoSerie.update(); return; }
+
+  graficoSerie = new Chart(document.getElementById("grafico-serie"), {
+    data: datos,
+    options: {
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: { tooltip: { callbacks: { label: c => c.dataset.label + ": " + (c.raw === null ? "línea base" : formato(c.raw) + " ha") } },
+                 legend: { labels: { color: color("--texto") } } },
+      scales: {
+        y: { position: "left", title: { display: true, text: "Nuevas (ha)" }, beginAtZero: true },
+        y2: { position: "right", title: { display: true, text: "Acumulado (ha)" }, beginAtZero: true, grid: { drawOnChartArea: false } },
+      },
+    },
+  });
+}
+
+// ---------- Expansión fuera de Madre de Dios ----------
+function actualizarExpansion() {
+  if (graficoExpansion) return; // no depende de los filtros
+  const anios = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+  const mdd = anios.map(a => nuevoEn("PE_17", a));
+  const otros = anios.map(a => idsDeTipo("Departamento").filter(id => id !== "PE_17")
+                                .reduce((s, id) => s + nuevoEn(id, a), 0));
+  const pct = anios.map((a, i) => 100 * otros[i] / (mdd[i] + otros[i]));
+
+  graficoExpansion = new Chart(document.getElementById("grafico-expansion"), {
+    data: {
+      labels: anios.map(a => a === 2026 ? "2026*" : String(a)),
+      datasets: [
+        { type: "bar", label: "Madre de Dios", data: mdd, backgroundColor: color("--oro"), stack: "ha", yAxisID: "y" },
+        { type: "bar", label: "Otros departamentos", data: otros, backgroundColor: color("--poza"), stack: "ha", yAxisID: "y" },
+        { type: "line", label: "% fuera de Madre de Dios", data: pct, borderColor: color("--alerta"),
+          backgroundColor: color("--alerta"), yAxisID: "y2", tension: 0.2 },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: { tooltip: { callbacks: { label: c => c.dataset.yAxisID === "y2"
+                   ? c.dataset.label + ": " + c.raw.toFixed(1) + " %"
+                   : c.dataset.label + ": " + formato(c.raw) + " ha" } },
+                 legend: { labels: { color: color("--texto") } } },
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true, title: { display: true, text: "Hectáreas nuevas" } },
+        y2: { position: "right", min: 0, max: 30, title: { display: true, text: "% fuera de MDD" }, grid: { drawOnChartArea: false } },
+      },
+    },
+  });
+}
+
+// ---------- Tabla con búsqueda ----------
+function filasTabla() {
+  const texto = sinTildes(estado.busqueda);
+  return idsDeTipo(estado.tipo)
+    .map(id => ({
+      nombre: territorios[id].nombre,
+      acumulado: acumuladoAl(id, estado.anio),
+      nuevo: estado.anio === 2018 ? null : nuevoEn(id, estado.anio),
+      desde2018: acumuladoAl(id, estado.anio) - acumuladoAl(id, 2018),
+    }))
+    .filter(f => sinTildes(f.nombre).includes(texto))
+    .sort((a, b) => b.acumulado - a.acumulado);
+}
+
+function actualizarTabla() {
+  document.getElementById("titulo-tabla").textContent = "Buscar: " + estado.tipo.toLowerCase() + " (año " + estado.anio + ")";
+  const filas = filasTabla();
+  document.getElementById("tabla").innerHTML = filas.length
+    ? filas.map(f => `<tr><td>${f.nombre}</td><td class="num">${formato(f.acumulado)}</td>
+        <td class="num">${f.nuevo === null ? "línea base" : formato(f.nuevo)}</td><td class="num">${formato(f.desde2018)}</td></tr>`).join("")
+    : `<tr><td colspan="4">Ningún territorio coincide con «${estado.busqueda}». Prueba con otro nombre o cambia el tipo de territorio.</td></tr>`;
+}
+
+function descargarCSV() {
+  const filas = filasTabla();
+  const csv = ["territorio,tipo,anio,hectareas_acumuladas,hectareas_nuevas_en_el_anio,hectareas_desde_2018"]
+    .concat(filas.map(f => `"${f.nombre}",${estado.tipo},${estado.anio},${f.acumulado.toFixed(2)},${f.nuevo === null ? "" : f.nuevo.toFixed(2)},${f.desde2018.toFixed(2)}`))
+    .join("\n");
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" }));
+  enlace.download = `mineria_${sinTildes(estado.tipo).replace(/ /g, "_")}_${estado.anio}.csv`;
+  enlace.click();
+}
+</script>
+</body>
+</html>
