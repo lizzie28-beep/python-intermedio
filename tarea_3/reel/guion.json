@@ -1,0 +1,41 @@
+{
+    "titulo": "La Amazonía es devorada por el oro",
+    "escenas": [
+        {
+            "frase": "Desde dos mil dieciocho, los satélites detectaron más de ciento siete mil hectáreas nuevas de minería en la Amazonía peruana.",
+            "cifra": "+107,676 ha",
+            "etiqueta": "Minería nueva detectada desde 2018"
+        },
+        {
+            "frase": "En dos mil dieciocho, la minería ocupaba unas setenta y ocho mil hectáreas de la Amazonía peruana. Hoy supera las ciento ochenta y cinco mil: más del doble en apenas ocho años.",
+            "cifra": "+185,566 ha",
+            "etiqueta": "Huella minera acumulada a setiembre de 2026"
+        },
+        {
+            "frase": "Pero no se detiene: entre enero y setiembre de dos mil veintiséis hubo treinta punto seis por ciento más minería nueva que en dos mil veinticinco.",
+            "cifra": "+30.6%",
+            "etiqueta": "Aumento en minería nueva (2026 vs 2025)"
+
+        },
+        {
+            "frase": "Madre de Dios concentra el noventa y tres por ciento, pero en dos mil veinticinco una de cada cuatro hectáreas nuevas apareció en otras regiones.",
+            "cifra": "24.8%",
+            "etiqueta": "Participación de otras regiones en minería nueva (2025)"
+        },
+        {
+            "frase": "En Huánuco pasó de diecisiete a más de cuatro mil setecientas hectáreas, en la zona de amortiguamiento de la Reserva Comunal El Sira.",
+            "cifra":"17 → 4,736 ha",
+            "etiqueta": "Huánuco: el nuevo frente minero"
+        },
+        {
+            "frase": "Hay más de cincuenta y seis mil hectáreas minadas alrededor de las áreas protegidas, mientras que en territorios indígenas, más de treinta y un mil",
+            "cifra": "56,454 ha",
+            "etiqueta": "Minería alrededor de áreas protegidas"
+        },
+        {
+            "frase": "Puedes ver el mapa, explorar cada región y comparar los años en el dashboard, hecho con información satelital de Amazon Mining Watch. El enlace está en la publicación.",
+            "cifra": "",
+            "etiqueta": "Explora el dashboard: enlace en la publicación"
+        }
+    ]
+        }
