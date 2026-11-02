@@ -363,7 +363,7 @@ footer { padding: 2rem 0 3rem; font-size: .9rem; color: var(--texto-suave); bord
       <ul>
         <li>Amazon Mining Watch (Earth Genome, Amazon Conservation y Pulitzer Center). Datos: <a href="https://github.com/earthrise-media/mining-detector">github.com/earthrise-media/mining-detector</a>. Licencia CC BY 4.0.</li>
         <li>Límites departamentales: INEI, versión simplificada de <a href="https://github.com/juaneladio/peru-geojson">juaneladio/peru-geojson</a>.</li>
-        <li>Mapa base: © OpenStreetMap y CARTO.</li>
+        <li>Mapa base: © OpenStreetMap.</li>
       </ul>
     </div>
   </div>
@@ -528,10 +528,9 @@ const colorDe = ha => RANGOS.find(r => ha >= r.min).color;
 
 function prepararMapa(geo) {
   mapa = L.map("mapa", { scrollWheelZoom: false }).setView([-9.5, -74.5], 5);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    attribution: "© OpenStreetMap, © CARTO", maxZoom: 10,
+   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap", maxZoom: 10,
   }).addTo(mapa);
-
   capaMapa = L.geoJSON(geo, {
     style: estiloDepartamento,
     onEachFeature: (f, capa) => {
