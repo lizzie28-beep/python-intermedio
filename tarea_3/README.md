@@ -73,6 +73,7 @@ y entra a http://localhost:8000.
 
 - **Claude (Anthropic):** apoyo para buscar fuentes de datos, estructurar los scripts, crear la plantilla del dashboard y revisar el guion.
 - **Qwen3-TTS (Alibaba):** narración generada en la demo oficial de Hugging Face, clonando mi voz a partir de una grabación de unos 20 segundos. La grabación original no se publica por privacidad.
+- Nota: unos pocos segundos en la narración se grabaron directamente con mi voz, porque el modelo omitió esa frase al generar el audio.
 - **CapCut:** edición del video y subtítulos.
 
 Verifiqué todas las cifras del dashboard y del reel contra los resultados de `analizar_datos.py`.
