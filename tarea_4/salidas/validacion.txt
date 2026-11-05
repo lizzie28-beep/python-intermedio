@@ -1,0 +1,15 @@
+==================================================
+VALIDACIÓN ENAHO 2024
+==================================================
+Pobreza nacional:      27.53%
+Pobreza urbana:        26.97%
+Pobreza rural:         27.92%
+Residentes habituales: 108,664
+Dptos identificados:   25
+
+VERIFICACIONES:
+✅ OK | Residentes habituales: 108,664 (ref: 108,664)
+✅ OK | Pobreza nacional: 27.5% (ref: 27.6%)
+✅ OK | Unidades territoriales: 25 (ref: 25)
+✅ OK | Sin valores nulos en pobre: 0 (ref: 0)
+==================================================
