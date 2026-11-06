@@ -1,0 +1,11 @@
+id,pregunta,fuente,respuesta_esperada,tolerancia
+1,¿Cuál fue la inflación interanual de Lima Metropolitana en diciembre 2024?,BCRP,1.97%,0.05
+2,¿Cuál fue el máximo de inflación interanual entre 2020 y 2024 y en qué mes ocurrió?,BCRP,8.81% en junio 2022,0.05
+3,¿Cuál fue el promedio de inflación interanual entre 2020 y 2024?,BCRP,4.47%,0.1
+4,¿Cuál fue el tipo de cambio promedio de venta en diciembre 2024?,BCRP,3.75 soles por dólar,0.05
+5,¿Cuál fue la pobreza monetaria nacional en 2024?,ENAHO,27.53%,0.1
+6,¿Cuántos residentes habituales tiene la ENAHO 2024?,ENAHO,108664,0
+7,¿Qué departamento tuvo la mayor pobreza monetaria en 2024?,ENAHO,Cajamarca,0
+8,¿Cuál fue la pobreza monetaria en el área urbana en 2024?,ENAHO,26.97%,0.1
+9,¿Cuál fue la inflación en enero 2020 y la pobreza nacional en 2024?,BCRP+ENAHO,1.89% y 27.53%,0.1
+10,¿En qué período la inflación superó el 8% y qué regiones tenían mayor pobreza en 2024?,BCRP+ENAHO,2022 (jun-dic) - Cajamarca y Loreto,0

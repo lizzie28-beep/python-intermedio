@@ -1,0 +1,11 @@
+id,pregunta,respuesta_esperada,modo_a,modo_b,correcto_a,correcto_b,herramientas_b
+1,Inflación dic 2024,1.97%,1.97%,1.97%,si,si,MCP
+2,Máximo inflación 2020-2024,8.81% junio 2022,8.81% junio 2022,8.81% junio 2022,si,si,MCP
+3,Promedio inflación 2020-2024,4.47%,4.41%,4.47%,no,si,MCP
+4,Tipo de cambio dic 2024,3.737,3.737,3.7366,si,si,MCP
+5,Pobreza nacional 2024,27.53%,27.6%,27.53%,parcial,si,Skill
+6,Residentes habituales ENAHO 2024,108664,no supo,108664,no,si,Skill
+7,Dpto mayor pobreza 2024,Cajamarca,Cajamarca,Cajamarca 44.99%,si,si,Skill
+8,Pobreza urbana 2024,26.97%,24.8%,26.97%,no,si,Skill
+9,Inflación ene 2020 y pobreza 2024,1.89% y 27.53%,1.89% y 27.6%,1.89% y 27.53%,parcial,si,MCP+Skill
+10,Período inflación >8% y regiones pobres,2022 may-dic Cajamarca Loreto,may-dic 2022 Cajamarca Loreto,may 2022-mar 2023 top 5 regiones,si,si,MCP+Skill
